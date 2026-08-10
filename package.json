@@ -1,0 +1,19 @@
+{
+  "name": "fleet-connections",
+  "version": "1.0.0",
+  "description": "Integration layer wiring the fleet repos into one running system",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:full-loop": "vitest run tests/full-loop.test.ts"
+  },
+  "keywords": ["fleet", "integration", "mud-engine", "hermes", "the-tap", "collective-unconscious", "emergence"],
+  "author": "Casey DiGennaro",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "vitest": "^4.1.10"
+  }
+}

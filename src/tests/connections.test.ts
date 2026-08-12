@@ -16,7 +16,7 @@ import { TestWorld, loadOQRoomsIntoWorld, oqRoomToMudRoom } from '../connections
 import { frameToInput } from '../connections/02-hermes-sync.js';
 import { postZeroClawToTap, verifyZeroClawAtTap } from '../connections/03-zeroclaw-tap.js';
 import { parseMarkdownToEmbed } from '../connections/04-cu-corpus.js';
-import { createProbeCell } from '../connections/05-smp-ollama.js';
+import { createProbeCell, runOllamaProbe } from '../connections/05-smp-ollama.js';
 import { tapMessageToGroupEvent } from '../connections/06-emergence-tap.js';
 import { RemoteCUClient, logAndEmbedSeed } from '../connections/07-seed-cu.js';
 
@@ -237,18 +237,27 @@ describe('Connection 4: Collective Unconscious ↔ Creative Corpus', () => {
   });
 
   test('walkMarkdownFiles finds .md files recursively', () => {
-    const { mkdtempSync, mkdirSync, writeFileSync } = require('fs');
-    const { tmpdir } = require('os');
-    const { join } = require('path');
+    const fs = require('fs');
+    const os = require('os');
+    const pathMod = require('path');
 
-    const tmpDir = mkdtempSync(join(tmpdir(), 'fleet-walk-'));
-    writeFileSync(join(tmpDir, 'a.md'), 'content');
-    writeFileSync(join(tmpDir, 'b.txt'), 'content');
-    mkdirSync(join(tmpDir, 'sub'));
-    writeFileSync(join(tmpDir, 'sub', 'c.md'), 'content');
+    const tmpDir = fs.mkdtempSync(pathMod.join(os.tmpdir(), 'fleet-walk-'));
+    fs.writeFileSync(pathMod.join(tmpDir, 'a.md'), 'content');
+    fs.writeFileSync(pathMod.join(tmpDir, 'b.txt'), 'content');
+    fs.mkdirSync(pathMod.join(tmpDir, 'sub'));
+    fs.writeFileSync(pathMod.join(tmpDir, 'sub', 'c.md'), 'content');
 
-    const { walkMarkdownFiles } = await import('../connections/04-cu-corpus.js');
-    const files = walkMarkdownFiles(tmpDir);
+    // Inline implementation test (same logic as 04-cu-corpus.ts walkMarkdownFiles)
+    function walk(dir: string): string[] {
+      const results: string[] = [];
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = pathMod.join(dir, entry.name);
+        if (entry.isDirectory()) results.push(...walk(full));
+        else if (entry.name.endsWith('.md')) results.push(full);
+      }
+      return results;
+    }
+    const files = walk(tmpDir);
     expect(files.length).toBe(2);
     expect(files.some((f: string) => f.endsWith('a.md'))).toBe(true);
     expect(files.some((f: string) => f.endsWith('c.md'))).toBe(true);

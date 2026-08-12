@@ -28,6 +28,7 @@ Fleet Connections is the translation layer. Seven wires. Seven bridges. Seven ne
 | 05 | [`smp-ollama`](./src/connections/05-smp-ollama.ts) | [SMP Notebook](https://github.com/SuperInstance/AI-Writings) ↔ local Ollama | Creates probe cells for local model experimentation |
 | 06 | [`emergence-tap`](./src/connections/06-emergence-tap.ts) | [the-tap](https://github.com/SuperInstance/the-tap) ↔ [emergence-engine](https://github.com/SuperInstance/emergence-engine) | Converts Tap messages into group dynamics events |
 | 07 | [`seed-cu`](./src/connections/07-seed-cu.ts) | Seed logger ↔ [collective-unconscious](https://github.com/SuperInstance/collective-unconscious) | Logs and embeds agent state seeds |
+| 08 | [`cns-echo-health`](./src/connections/08-cns-echo-health.ts) | [cns-bridge](https://github.com/SuperInstance/cns-bridge) ↔ [cns-echo](https://github.com/SuperInstance/cns-echo) | Analyzes bus traffic health, provides telemetry summaries |
 
 ---
 
@@ -51,6 +52,8 @@ Fleet Connections is the translation layer. Seven wires. Seven bridges. Seven ne
 8. State changes reflected in MUD rooms (mud-oq)
        │
 9. SMP notebook probes local models for insight (smp-ollama)
+       │
+10. CNS echo-health checks signal health on the bus (cns-echo-health)
        │
       └──► back to perception
 ```

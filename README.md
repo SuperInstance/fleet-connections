@@ -123,6 +123,96 @@ Connections ARE the bridge. Where [cns-bridge](https://github.com/SuperInstance/
 
 ---
 
+## Quick Start
+
+```bash
+git clone https://github.com/SuperInstance/fleet-connections.git
+cd fleet-connections
+npm install
+npm test           # Run all integration tests
+npm run test:full-loop  # Full-loop integration test
+npm run build      # TypeScript compile
+```
+
+### Using a Connection Module
+
+```typescript
+import { mudOqBridge } from './src/connections/01-mud-oq';
+import { hermesSync } from './src/connections/02-hermes-sync';
+
+// Load OQ rooms into mud-engine World
+const world = mudOqBridge.loadRooms(oqRooms);
+
+// Sync hermes frames to D1
+await hermesSync.sync(frames, db);
+```
+
+---
+
+## Testing
+
+Five test suites verify cross-repo contracts using **real source code** from both sides. No mocks of the repos themselves — only standard test isolation.
+
+```bash
+npm test                    # All tests
+npm run test:full-loop      # Full integration loop
+```
+
+Tests cover:
+- Type compatibility (mud-engine types ↔ OQ types)
+- Data transformation correctness (frames → D1 rows)
+- Event propagation (Tap messages → emergence events)
+- End-to-end loop (perception → sync → post → react → embed → detect → record)
+
+---
+
+## Configuration
+
+### Dependencies
+
+**Zero runtime dependencies.** The only deps are dev:
+
+| Package | Purpose |
+|---------|---------|
+| [TypeScript](https://www.typescriptlang.org/) | Type checking |
+| [Vitest](https://vitest.dev/) | Test runner |
+
+### Design Principles
+
+1. **Type translation, not type invention** — each module maps existing types from repo A to repo B. No new abstractions.
+2. **Inline when necessary** — cross-repo TypeScript imports can't resolve at test time, so source types are mirrored inline.
+3. **Integration tests use real source** — tests import actual code from both repos being connected.
+4. **Zero runtime dependencies** — the only deps are `typescript` and `vitest` (dev only).
+
+---
+
+## Further Reading
+
+### For Developers
+
+- [Adapter Pattern (Wikipedia)](https://en.wikipedia.org/wiki/Adapter_pattern) — what each connection module is
+- [Bridge Pattern (Wikipedia)](https://en.wikipedia.org/wiki/Bridge_pattern) — the structural pattern used
+- [Facade Pattern (Wikipedia)](https://en.wikipedia.org/wiki/Facade_pattern) — simplifying cross-repo access
+- [Integration Testing (Wikipedia)](https://en.wikipedia.org/wiki/Integration_testing) — what the test suites verify
+- [Contract Testing (Wikipedia)](https://en.wikipedia.org/wiki/Contract_testing) — consumer-driven contracts
+
+### For Architects
+
+- [Service Integration Patterns](https://www.enterpriseintegrationpatterns.com/) — enterprise integration patterns
+- [Coupling vs Cohesion](https://en.wikipedia.org/wiki/Coupling_(computer_programming)) — the trade-off each module navigates
+- [Anti-Corruption Layer](https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer) — preventing domain pollution
+- [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — where fleet-gateway fits
+- [Event-Driven Architecture](https://en.wikipedia.org/wiki/Event-driven_architecture) — the fleet-envelope connection
+
+### For Systems Engineers
+
+- [Distributed Systems (Wikipedia)](https://en.wikipedia.org/wiki/Distributed_computing) — what the fleet IS
+- [Fallacies of Distributed Computing](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing) — what to watch for
+- [CAP Theorem (Wikipedia)](https://en.wikipedia.org/wiki/CAP_theorem) — consistency vs availability trade-offs
+- [Byzantine Fault Tolerance](https://en.wikipedia.org/wiki/Byzantine_fault) — multi-agent trust
+
+---
+
 ## License
 
 MIT · Built by Casey DiGennaro & the SuperInstance Fleet

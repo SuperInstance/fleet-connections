@@ -30,6 +30,43 @@ Fleet Connections is the translation layer. Seven wires. Seven bridges. Seven ne
 | 07 | [`seed-cu`](./src/connections/07-seed-cu.ts) | Seed logger ↔ [collective-unconscious](https://github.com/SuperInstance/collective-unconscious) | Logs and embeds agent state seeds |
 | 08 | [`cns-echo-health`](./src/connections/08-cns-echo-health.ts) | [cns-bridge](https://github.com/SuperInstance/cns-bridge) ↔ [cns-echo](https://github.com/SuperInstance/cns-echo) | Analyzes bus traffic health, provides telemetry summaries |
 
+### The Keel at a Glance
+
+```mermaid
+graph LR
+    subgraph perception[Perception]
+        HP[hermes-perception]
+        HC[hermes-cloudflare]
+        ZC[zeroclaw]
+    end
+    subgraph social[Social]
+        TT[the-tap]
+        EE[emergence-engine]
+    end
+    subgraph memory[Memory]
+        CU[collective-unconscious]
+        AW[ai-writings]
+    end
+    subgraph game[Game]
+        ME[mud-engine]
+        OQ[officers-quarters]
+    end
+    subgraph cns[CNS]
+        CB[cns-bridge]
+        CE[cns-echo]
+    end
+    SMP[SMP Notebook]
+
+    ME -- "01 mud-oq" --> OQ
+    HP -- "02 hermes-sync" --> HC
+    ZC -- "03 zeroclaw-tap" --> TT
+    CU -- "04 cu-corpus" --> AW
+    SMP[SMP Notebook] -- "05 smp-ollama" --> OL[local Ollama]
+    TT -- "06 emergence-tap" --> EE
+    SEED[seed logger] -- "07 seed-cu" --> CU
+    CB -- "08 cns-echo-health" --> CE
+```
+
 ---
 
 ## The Full Fleet Loop

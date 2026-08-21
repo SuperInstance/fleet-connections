@@ -7,8 +7,8 @@ Seven TypeScript connection modules — each one a wire between two fleet repos.
 ```
 src/
 ├── connections/
-│   ├── 01-mud-oq.ts          — mud-engine ↔ officers-quarters
-│   ├── 02-hermes-sync.ts     — hermes-perception ↔ hermes-cloudflare
+│   ├── 01-mud-oq.ts          — mud-engine ↔ elephant
+│   ├── 02-hermes-sync.ts     — hermes-avatar ↔ hermes-cloudflare
 │   ├── 03-zeroclaw-tap.ts    — zeroclaw ↔ the-tap
 │   ├── 04-cu-corpus.ts       — collective-unconscious ↔ ai-writings
 │   ├── 05-smp-ollama.ts      — SMP notebook ↔ local Ollama

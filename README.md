@@ -7,6 +7,10 @@ Seven TypeScript connection modules wiring the SuperInstance fleet's repos into 
 **Repo:** [SuperInstance/fleet-connections](https://github.com/SuperInstance/fleet-connections)
 **Created:** August 9, 2026
 
+<p align="center"><img src="assets/images/hero.jpg" alt="The keel inside the dark hold — one warm beam carrying the whole ship's weight in silence, invisible while intact." width="720"></p>
+
+*Seven wires, one beam: every repo rides the same keel.*
+
 ---
 
 ## What This Is
